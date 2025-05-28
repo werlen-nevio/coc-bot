@@ -3,17 +3,24 @@ import cv2
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-def getGoldValue(image_path="test/img/screenshot.png"):
+def getResourceValue(resource_type):
+    image_path="test/img/screenshot.png"
     img = cv2.imread(image_path)
 
-    x, y, w, h = 60, 120, 260, 60
+    if resource_type == "gold":
+        x, y, w, h = 60, 120, 260, 60
+    elif resource_type == "elixir":
+        x, y, w, h = 60, 170, 260, 60
+    elif resource_type == "dark_elixir":
+        x, y, w, h = 60, 220, 260, 60
+    else:
+        raise ValueError("Invalid resource type. Choose from 'gold', 'elixir', or 'dark_elixir'.")
+    
     crop = img[y:y+h, x:x+w]
 
     gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (3, 3), 0)
     _, thresh = cv2.threshold(blur, 160, 255, cv2.THRESH_BINARY_INV)
-
-    cv2.imwrite("debug_gold_thresh.png", thresh)
 
     config = '--psm 6 -c tessedit_char_whitelist=0123456789 '
     text = pytesseract.image_to_string(thresh, config=config)

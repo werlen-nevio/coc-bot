@@ -1,8 +1,5 @@
-from ocr_utils import getGoldValue
+from ocr_utils import getResourceValue
 
-gold = getGoldValue()
-
-if gold is not None:
-    print(f"Goldwert erkannt: {gold}")
-else:
-    print("❌ Kein Goldwert erkannt.")
+print(f"Gold: {getResourceValue('gold')}")
+print(f"Elixir: {getResourceValue('elixir')}")
+print(f"Dark Elixir: {getResourceValue('dark_elixir')}")
