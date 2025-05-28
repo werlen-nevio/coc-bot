@@ -29,3 +29,16 @@ def getResourceValue(resource_type):
     digits = ''.join(filter(str.isdigit, text))
 
     return int(digits) if digits else None
+
+def shouldAttack():
+    gold = getResourceValue("gold")
+    elixir = getResourceValue("elixir")
+    dark_elixir = getResourceValue("dark_elixir")
+
+    if gold is None or elixir is None or dark_elixir is None:
+        return False
+
+    if gold >= 600000 and elixir >= 600000 and dark_elixir >= 6000:
+        return True
+    else:
+        return False
