@@ -1,3 +1,3 @@
-from shouldAttack_utils import shouldAttack
+from clickUtils import homeSearchAttack
 
-print("Should attack:", shouldAttack())
+homeSearchAttack()
