@@ -1,11 +1,12 @@
 import pytesseract
 import cv2
+from windowScreenshot import get_window_screenshot
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def getResourceValue(resource_type):
-    image_path="test/img/screenshot.png"
-    img = cv2.imread(image_path)
+    window_title = "Clash of Clans"
+    img = get_window_screenshot(window_title)
 
     if resource_type == "gold":
         x, y, w, h = 60, 120, 260, 60
@@ -34,11 +35,21 @@ def shouldAttack():
     gold = getResourceValue("gold")
     elixir = getResourceValue("elixir")
     dark_elixir = getResourceValue("dark_elixir")
-
+    bShouldAttack = False
+    
     if gold is None or elixir is None or dark_elixir is None:
         return False
 
-    if gold >= 600000 and elixir >= 600000 and dark_elixir >= 6000:
-        return True
-    else:
-        return False
+    if gold >= 500000 and elixir >= 500000 and dark_elixir >= 6000:
+        bShouldAttack = True
+
+    if gold >= 300000 and elixir >= 1000000 and dark_elixir >= 6000:
+        bShouldAttack = True
+
+    if gold >= 1000000 and elixir >= 300000 and dark_elixir >= 6000:
+        bShouldAttack = True
+
+    if gold >= 300000 and elixir >= 300000 and dark_elixir >= 10000:
+        bShouldAttack = True
+
+    return bShouldAttack
